@@ -8,398 +8,173 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  double _currentSliderPrimaryValue = 0.2;
+  double homePrice = 0.2;
+  double downPayment = 0.2;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 230, 190),
-      body: SafeArea(
+      backgroundColor: const Color.fromARGB(255, 255, 230, 190),
+      appBar: AppBar(
+        title: const Text("Mortgage Calculator"),
+        backgroundColor: const Color(0xFF8d7959),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 90,
-                    height: 40,
-                    child: Image.asset(
-                      "assets/mortage_calculator.png",
-                      width: 90,
-                      height: 40,
-                    ),
-                  ),
-                  Icon(Icons.dark_mode),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Home Price",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Color(0xFF8d7959),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Container(
-                    height: 50,
-                    margin: EdgeInsets.only(top: 8),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFddbd8a),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Image.asset(
-                            "assets/dollar.png",
-                            width: 25,
-                            height: 25,
-                          ),
-                        ),
-                        Text(
-                          "150,000",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 87, 75, 55),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            MoneyInput(title: "Home Price", value: "150,000"),
             Slider(
-              value: _currentSliderPrimaryValue,
-              onChanged: (double value) {
+              value: homePrice,
+              onChanged: (v) {
                 setState(() {
-                  _currentSliderPrimaryValue = value;
+                  homePrice = v;
                 });
               },
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "\$0",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Color(0xFF8d7959),
-                      fontSize: 10,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  Text(
-                    "\$999,999",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Color(0xFF8d7959),
-                      fontSize: 10,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Down Payment",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Color(0xFF8d7959),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Container(
-                    height: 50,
-                    margin: EdgeInsets.only(top: 8),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFddbd8a),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Image.asset(
-                            "assets/dollar.png",
-                            width: 25,
-                            height: 25,
-                          ),
-                        ),
-                        Text(
-                          "18,000",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 87, 75, 55),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            const SizedBox(height: 20),
+            MoneyInput(title: "Down Payment", value: "18,000"),
             Slider(
-              value: _currentSliderPrimaryValue,
-              onChanged: (double value) {
+              value: downPayment,
+              onChanged: (v) {
                 setState(() {
-                  _currentSliderPrimaryValue = value;
+                  downPayment = v;
                 });
               },
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "\$0",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Color(0xFF8d7959),
-                      fontSize: 10,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  Text(
-                    "\$999,999",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Color(0xFF8d7959),
-                      fontSize: 10,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
+            const SizedBox(height: 20),
+            InterestRateInput(value: "7.5"),
+            const SizedBox(height: 20),
+            const LoanTermRow(),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size.fromHeight(50),
+                backgroundColor: const Color(0xFF8d7959),
               ),
-            ),
-            SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Interest Rate",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Color(0xFF8d7959),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Container(
-                    height: 50,
-                    margin: EdgeInsets.only(top: 8),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFddbd8a),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Container(
-                            width: 25,
-                            height: 25,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Color(0xff8d7959),
-                              border: Border.all(
-                                color: Color(0xffddbd8a),
-                                width: 1,
-                              ),
-                            ),
-                            child: ClipOval(
-                              child: Text(
-                                "%",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "7.5",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 87, 75, 55),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Loan Term",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Color(0xFF8d7959),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    "Years",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Color(0xFF8d7959),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 45,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF8d7959),
-                      borderRadius: BorderRadius.circular(13),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "30",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  Container(
-                    width: 45,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFddbd8a),
-                      borderRadius: BorderRadius.circular(13),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "20",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFF8d7959),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 45,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFddbd8a),
-                      borderRadius: BorderRadius.circular(13),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "15",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFF8d7959),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 45,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFddbd8a),
-                      borderRadius: BorderRadius.circular(13),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "10",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFF8d7959),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                "Start Date",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  color: Color(0xFF8d7959),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF8d7959),
-                  foregroundColor: Colors.white,
-                  minimumSize: Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadiusGeometry.circular(10),
-                  ),
-                ),
-                onPressed: () {},
-                child: Text('Calculate'),
+              child: const Text(
+                "Calculate",
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class MoneyInput extends StatelessWidget {
+  final String title;
+  final String value;
+
+  const MoneyInput({super.key, required this.title, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            color: Color(0xFF8d7959),
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        Container(
+          height: 50,
+          margin: const EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          decoration: BoxDecoration(
+            color: const Color(0xFFddbd8a),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            value,
+            style: const TextStyle(
+              color: Color.fromARGB(255, 87, 75, 55),
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class InterestRateInput extends StatelessWidget {
+  final String value;
+
+  const InterestRateInput({super.key, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Interest Rate",
+          style: TextStyle(
+            color: Color(0xFF8d7959),
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        Container(
+          height: 50,
+          margin: const EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          decoration: BoxDecoration(
+            color: const Color(0xFFddbd8a),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "$value %",
+            style: const TextStyle(
+              color: Color.fromARGB(255, 87, 75, 55),
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class LoanTermRow extends StatelessWidget {
+  const LoanTermRow({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final terms = ["30", "20", "15", "10"];
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: terms.map((term) {
+        return Container(
+          width: 45,
+          height: 30,
+          decoration: BoxDecoration(
+            color: term == "30" ? const Color(0xFF8d7959) : const Color(0xFFddbd8a),
+            borderRadius: BorderRadius.circular(13),
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            term,
+            style: TextStyle(
+              color: term == "30" ? Colors.white : const Color(0xFF8d7959),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        );
+      }).toList(),
     );
   }
 }
